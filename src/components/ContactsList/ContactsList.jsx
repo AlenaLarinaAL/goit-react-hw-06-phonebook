@@ -1,12 +1,9 @@
 import { List, Item, Span, Button } from './ContactsList.styled';
 import { MdDelete } from 'react-icons/md';
-import { useDispatch, useSelector } from 'react-redux';
-import { deleteContacts } from 'store/contacts/contactsSlice';
+import { useContacts } from 'hooks/useContacts';
 
 export const ContactsList = () => {
-  const contacts = useSelector(state => state.contacts.contacts);
-  const filter = useSelector(state => state.filter.filter);
-  const dispatch = useDispatch();
+  const { contacts, filter, deleteContacts } = useContacts();
 
   const filteredContacts = contacts.filter(({ name }) =>
     name.toLowerCase().includes(filter.toLowerCase())
@@ -20,7 +17,7 @@ export const ContactsList = () => {
             <Span>
               {name}: {number}
             </Span>
-            <Button onClick={() => dispatch(deleteContacts(id))}>
+            <Button onClick={() => deleteContacts(id)}>
               <MdDelete size={15} />
             </Button>
           </Item>

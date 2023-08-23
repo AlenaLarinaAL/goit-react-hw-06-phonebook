@@ -1,11 +1,9 @@
 import { Form, Button, Input, Label } from './ContactsEditor.styled';
-import { useDispatch, useSelector } from 'react-redux';
-import { addContacts } from 'store/contacts/contactsSlice';
 import { nanoid } from 'nanoid';
+import { useContacts } from 'hooks/useContacts';
 
 export const ContactsEditor = () => {
-  const contacts = useSelector(state => state.contacts.contacts);
-  const dispatch = useDispatch();
+  const { contacts, addContacts } = useContacts();
 
   const handleSubmit = event => {
     event.preventDefault();
@@ -23,7 +21,7 @@ export const ContactsEditor = () => {
       return;
     }
 
-    dispatch(addContacts({ id: nanoid(5), name, number }));
+    addContacts({ id: nanoid(5), name, number });
     event.target.reset();
   };
 
@@ -46,7 +44,6 @@ export const ContactsEditor = () => {
           type="tel"
           name="number"
           pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
-          // pattern="[0-9]{3}-[0-9]{3}-[0-9]{3}"
           title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
           required
         />
